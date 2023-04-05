@@ -15,7 +15,7 @@ class EmojiMemoryGame: ObservableObject {
     private static let emojis = ["🎩","🧢", "👒", "⛑", "👑","👠" ,"🧣","🪖","🎓","🕶","👓","🥽","💍", "🐶", "🐱","🐭", "🦊", "🐻", "🦇", "🦈", "🦧", "🐍", "🦬", "🦀","🐳", "🦍"];
     
     private static func createMemoryGame () -> MemoryGame<String>{
-           MemoryGame<String>(numberOfPairsCards: 4)  { pairIndex in
+           MemoryGame<String>(numberOfPairsCards: 8)  { pairIndex in
                 emojis[pairIndex]
         }
     }    
@@ -30,4 +30,10 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
     
+}
+
+struct Previews_EmojiMomeryGame_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
 }

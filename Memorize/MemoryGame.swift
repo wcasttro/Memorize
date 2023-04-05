@@ -11,8 +11,8 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable{
     private(set) var cards: Array<Card>
     
-   private var indexOfTheOneAndOnlyFaceUpCard: Int? {
-            get { cards.indices.filter { cards[$0].isFaceUp}.oneAndOnly }
+    private var indexOfTheOneAndOnlyFaceUpCard: Int? {
+            get { cards.indices.filter({ cards[$0].isFaceUp}).oneAndOnly }
             set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
     }
     
@@ -22,10 +22,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
             !cards[choseIndex].isMAtched
         {
             
-            if let potentialMacthInde  = indexOfTheOneAndOnlyFaceUpCard {
-                if(cards[choseIndex].content == cards[potentialMacthInde].content){
+            if let potentialMacthIndex  = indexOfTheOneAndOnlyFaceUpCard {
+                if(cards[choseIndex].content == cards[potentialMacthIndex].content){
                     cards[choseIndex].isMAtched = true
-                    cards[potentialMacthInde].isMAtched = true
+                    cards[potentialMacthIndex].isMAtched = true
                 }
                 
                 cards[choseIndex].isFaceUp = true
@@ -33,8 +33,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = choseIndex
             }
-            
-            cards[choseIndex].isFaceUp.toggle()
         }
     }
       
@@ -51,7 +49,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
     
     struct Card: Identifiable{
         let id: Int
-        var isFaceUp = true
+        var isFaceUp = false
         var isMAtched = false
         let content: CardContent
         
