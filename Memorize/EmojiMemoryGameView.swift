@@ -12,7 +12,7 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
             ScrollView{
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80 ))]){
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100 ))]){
                     ForEach(game.cards )   { card in
                         CardView(card)
                             .aspectRatio(2/3, contentMode: .fit)
@@ -36,19 +36,32 @@ struct CardView: View{
     }
     
     var body: some View{
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: 20)
-            if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3)
-                Text(card.content).font(.largeTitle).foregroundColor(.orange).padding()
-            } else if card.isMAtched{
-                shape.opacity(0)
+        GeometryReader(content: {  geometry in
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: DrawingConstrants.cornerRadius)
+                if card.isFaceUp {
+                    shape.fill().foregroundColor(.white)
+                    shape.strokeBorder(lineWidth: DrawingConstrants.lineWith)
+                    Text(card.content).font(font(in: geometry.size))
+                } else if card.isMAtched{
+                    shape.opacity(0)
+                }
+                else {
+                    shape.fill()
+                }
             }
-            else {
-                shape.fill()
-            }
-        }
+        })
+       
+    }
+    
+    private func font(in size: CGSize) -> Font {
+        Font.system(size: min(size.width, size.height) * DrawingConstrants.fontScale)
+    }
+    
+    private struct DrawingConstrants {
+        static let cornerRadius: CGFloat = 20
+        static let lineWith: CGFloat = 3
+        static let fontScale: CGFloat = 0.7
     }
 }
 
