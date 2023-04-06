@@ -15,13 +15,16 @@ struct Cardify: ViewModifier {
     func body(content: Content) -> some View {
         ZStack {
             let shape = RoundedRectangle(cornerRadius: DrawingConstrants.cornerRadius)
+            
             if isFaceUp {
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: DrawingConstrants.lineWith)
-                content
+                                
             } else {
                 shape.fill()
             }
+            
+            content.opacity(isFaceUp ? 1 : 0)            
         }
         
     }
