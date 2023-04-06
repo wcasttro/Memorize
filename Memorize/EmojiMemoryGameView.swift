@@ -13,9 +13,9 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         AspectVGrid(items: game.cards, aspectRatio: 2/3)  { card in
             cardView(for: card)
-         }
-            .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
-            .padding(.horizontal)     
+        }
+        .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
+        .padding(.horizontal)
     }
     
     @ViewBuilder
@@ -43,21 +43,13 @@ struct CardView: View{
     var body: some View{
         GeometryReader(content: {  geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstrants.cornerRadius)
-                if card.isFaceUp {
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: DrawingConstrants.lineWith)
-                    Pie(startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 110)).padding(5).opacity(0.5)
-                    Text(card.content).font(font(in: geometry.size))
-                } else if card.isMAtched{
-                    shape.opacity(0)
-                }
-                else {
-                    shape.fill()
-                }
-            }
+                Pie(startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 110))
+                    .padding(5)
+                    .opacity(0.5)
+                Text(card.content)
+                    .font(font(in: geometry.size))
+            }.cardify(isFaceUp: card.isFaceUp)
         })
-       
     }
     
     private func font(in size: CGSize) -> Font {
@@ -65,8 +57,6 @@ struct CardView: View{
     }
     
     private struct DrawingConstrants {
-        static let cornerRadius: CGFloat = 10
-        static let lineWith: CGFloat = 3
         static let fontScale: CGFloat = 0.65
     }
 }
@@ -74,8 +64,8 @@ struct CardView: View{
 struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
-       let  game = EmojiMemoryGame()
-     
+        let  game = EmojiMemoryGame()
+        
         EmojiMemoryGameView(game: game)
             .preferredColorScheme(.light)
             .previewDevice("iPhone 12")

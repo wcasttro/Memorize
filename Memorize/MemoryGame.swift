@@ -12,14 +12,14 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
     private(set) var cards: Array<Card>
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
-            get { cards.indices.filter({ cards[$0].isFaceUp}).oneAndOnly }
-            set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
+        get { cards.indices.filter({ cards[$0].isFaceUp}).oneAndOnly }
+        set { cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue) } }
     }
     
     mutating func choose(_ card: Card){
         if let choseIndex = cards.firstIndex(where: { $0.id == card.id }),
-            !cards[choseIndex].isFaceUp,
-            !cards[choseIndex].isMAtched
+           !cards[choseIndex].isFaceUp,
+           !cards[choseIndex].isMAtched
         {
             
             if let potentialMacthIndex  = indexOfTheOneAndOnlyFaceUpCard {
@@ -29,13 +29,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
                 }
                 
                 cards[choseIndex].isFaceUp = true
-
+                
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = choseIndex
             }
         }
     }
-      
+    
     init(numberOfPairsCards: Int, createCardContent: (Int) -> CardContent){
         cards =  []
         
